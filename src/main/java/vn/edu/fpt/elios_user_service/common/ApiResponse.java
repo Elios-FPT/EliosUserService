@@ -1,4 +1,4 @@
-package common;
+package vn.edu.fpt.elios_user_service.common;
 
 public record ApiResponse<T>(int statusCode, String message, T data) {
 
@@ -12,4 +12,3 @@ public record ApiResponse<T>(int statusCode, String message, T data) {
         }
     }
 }
-
