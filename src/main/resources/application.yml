@@ -1,0 +1,54 @@
+server:
+  port: 8082
+  shutdown: graceful
+
+spring:
+  application:
+    name: elios-user-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ep-wild-mud-adcron5p-pooler.c-2.us-east-1.aws.neon.tech/UserService?sslmode=require&channelBinding=require
+    username: neondb_owner
+    password: npg_qPDA2cmBZsV3
+  jpa:
+    hibernate.ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+        format_sql: true
+  cloud:
+    consul:
+      host: host.docker.internal
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
+        heartbeat:
+          enabled: true
+          reregisterServiceOnFailure: true
+          ttl: 20s
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${server.port}:${random.value}
+        tags:
+          - traefik.enable=true
+          - traefik.http.routers.consul-test.rule=Host(`www.elios.com`) && PathPrefix(`/api/users`)
+          - traefik.http.routers.consul-test.middlewares=auth@docker
+          - traefik.http.services.consul-test.loadbalancer.server.port=8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,metrics,threaddump,heapdump
+  endpoint:
+    health.probes.enabled: true
+    health.show-details: always
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.orm.jdbc.bind: INFO
