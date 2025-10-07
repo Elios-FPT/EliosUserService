@@ -3,7 +3,12 @@ package vn.edu.fpt.elios_user_service.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
+import org.hibernate.type.SqlTypes;
+import vn.edu.fpt.elios_user_service.enums.Gender;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -30,6 +35,20 @@ public class User {
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "gender", columnDefinition = "gender")
+    private Gender gender;
+
+    @Column(name = "avatar_url", length = 1024)
+    private String avatarUrl;
+
+    @Column(name = "avatar_prefix", length = 128)
+    private String avatarPrefix;
+
+    @Column(name = "avatar_file_name", length = 80)
+    private String avatarFileName;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "timestamptz")

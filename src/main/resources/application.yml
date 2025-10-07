@@ -24,6 +24,8 @@ spring:
       discovery:
         enabled: true
         register: true
+        fail-fast: false
+        catalog-services-watch-delay: 5000
         heartbeat:
           enabled: true
           reregisterServiceOnFailure: true
