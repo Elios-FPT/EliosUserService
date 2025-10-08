@@ -39,6 +39,9 @@ spring:
           - traefik.http.routers.consul-test.rule=Host(`www.elios.com`) && PathPrefix(`/api/users`)
           - traefik.http.routers.consul-test.middlewares=auth@docker
           - traefik.http.services.consul-test.loadbalancer.server.port=8082
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
 
 management:
   endpoints:
