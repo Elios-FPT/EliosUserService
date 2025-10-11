@@ -131,6 +131,11 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<image>
+						<name>huynguyen287/${project.artifactId}:${project.version}</name>
+						<builder>paketobuildpacks/builder-jammy-base</builder>
+					</image>
+					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
 				</configuration>
 			</plugin>
 		</plugins>
