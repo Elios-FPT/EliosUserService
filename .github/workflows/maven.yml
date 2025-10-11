@@ -29,6 +29,6 @@ jobs:
     - name: Build and push Docker image using Spring Boot
       run: |
         mvn spring-boot:build-image \
-          -Dspring-boot.build-image.imageName=${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:latest
-          docker tag docker.io/${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:0.0.1-SNAPSHOT ${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:latest
-          docker push docker.io/${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:latest
+          -Dspring-boot.build-image.imageName=${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:lastest
+          docker tag docker.io/${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:0.0.1-SNAPSHOT ${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:lastest
+          docker push docker.io/${{ vars.DOCKERHUB_USERNAME }}/elios-user-service:lastest
