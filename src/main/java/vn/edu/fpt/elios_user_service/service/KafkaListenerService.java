@@ -10,6 +10,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.elios_user_service.dto.EventWrapper;
 import vn.edu.fpt.elios_user_service.dto.UserProfile;
+import vn.edu.fpt.elios_user_service.enums.EventType;
 
 import java.util.UUID;
 
@@ -25,10 +26,10 @@ public class KafkaListenerService {
         if (requestEvent == null || requestEvent.eventType() == null) return;
 
         switch (requestEvent.eventType()) {
-            case "GET_USER_BY_ID":
+            case GET_USER_BY_ID:
                 handleGetUserById(requestEvent);
                 break;
-            case "GET_ALL_USER":
+            case GET_ALL_USER:
                 handleGetAllUsers(requestEvent);
                 break;
             default:
@@ -43,7 +44,8 @@ public class KafkaListenerService {
 
         EventWrapper responseEvent = new EventWrapper(
                 UUID.randomUUID(),
-                "GET_USER_BY_ID",
+                requestEvent.eventId(),
+                EventType.GET_USER_BY_ID,
                 "UserProfile",
                 userProfile
         );
@@ -57,7 +59,8 @@ public class KafkaListenerService {
 
         EventWrapper responseEvent = new EventWrapper(
                 UUID.randomUUID(),
-                "GET_ALL_USER",
+                requestEvent.eventId(),
+                EventType.GET_ALL_USER,
                 "Page<UserProfile>",
                 userList
         );
