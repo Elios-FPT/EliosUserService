@@ -1,5 +1,6 @@
-package vn.edu.fpt.elios_user_service.config;
+package old.elios_user_service.config;
 
+import old.elios_user_service.dto.EventWrapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -12,7 +13,6 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import vn.edu.fpt.elios_user_service.dto.EventWrapper;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,14 +1,19 @@
-package vn.edu.fpt.elios_user_service.controller;
+package old.elios_user_service.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import old.elios_user_service.common.ApiResponse;
+import old.elios_user_service.dto.ProfileRegisterRequest;
+import old.elios_user_service.dto.ProfileUpdateRequest;
+import old.elios_user_service.dto.UserProfile;
+import old.elios_user_service.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.fpt.elios_user_service.common.ApiResponse;
-import vn.edu.fpt.elios_user_service.dto.*;
-import vn.edu.fpt.elios_user_service.service.UserService;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
-package vn.edu.fpt.elios_user_service.dto;
+package old.elios_user_service.dto;
 
-import vn.edu.fpt.elios_user_service.enums.Gender;
+import old.elios_user_service.enums.Gender;
 
 import java.time.Instant;
 import java.time.LocalDate;

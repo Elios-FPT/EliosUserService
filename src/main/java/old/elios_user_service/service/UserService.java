@@ -1,14 +1,16 @@
-package vn.edu.fpt.elios_user_service.service;
+package old.elios_user_service.service;
 
 import lombok.RequiredArgsConstructor;
+import old.elios_user_service.dto.ProfileRegisterRequest;
+import old.elios_user_service.dto.ProfileUpdateRequest;
+import old.elios_user_service.dto.UserProfile;
+import old.elios_user_service.entity.User;
+import old.elios_user_service.mapper.UserMapper;
+import old.elios_user_service.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vn.edu.fpt.elios_user_service.dto.*;
-import vn.edu.fpt.elios_user_service.entity.User;
-import vn.edu.fpt.elios_user_service.mapper.UserMapper;
-import vn.edu.fpt.elios_user_service.repository.UserRepository;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;

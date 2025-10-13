@@ -1,13 +1,13 @@
-package vn.edu.fpt.elios_user_service.dto;
+package old.elios_user_service.dto;
 
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
-import vn.edu.fpt.elios_user_service.enums.Gender;
+import old.elios_user_service.enums.Gender;
 
 import java.time.LocalDate;
 
-public record ProfileRegisterRequest(
+public record ProfileUpdateRequest(
         @NotBlank @Size(max = 20) String firstName,
         @NotBlank @Size(max = 20) String lastName,
         @NotBlank Gender gender,

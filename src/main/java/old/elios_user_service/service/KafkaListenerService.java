@@ -1,16 +1,16 @@
-package vn.edu.fpt.elios_user_service.service;
+package old.elios_user_service.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import old.elios_user_service.dto.EventWrapper;
+import old.elios_user_service.dto.UserProfile;
+import old.elios_user_service.enums.EventType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import vn.edu.fpt.elios_user_service.dto.EventWrapper;
-import vn.edu.fpt.elios_user_service.dto.UserProfile;
-import vn.edu.fpt.elios_user_service.enums.EventType;
 
 import java.util.UUID;
 

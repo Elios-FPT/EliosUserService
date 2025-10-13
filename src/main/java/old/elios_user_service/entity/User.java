@@ -1,14 +1,15 @@
-package vn.edu.fpt.elios_user_service.entity;
+package old.elios_user_service.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import old.elios_user_service.enums.Gender;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.hibernate.type.SqlTypes;
-import vn.edu.fpt.elios_user_service.enums.Gender;
 
 import java.time.Instant;
 import java.time.LocalDate;

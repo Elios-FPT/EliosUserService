@@ -1,4 +1,4 @@
-package vn.edu.fpt.elios_user_service.enums;
+package old.elios_user_service.enums;
 
 public enum EventType {
     GET_USER_BY_ID,
