@@ -18,7 +18,9 @@ public final class User extends BaseEntity<UUID> {
     private Instant createdAt;
     private Instant updatedAt;
 
-    private User(UUID id) {
+    public User() {super();}
+
+    public User(UUID id) {
         super(id);
     }
 
@@ -65,6 +67,42 @@ public final class User extends BaseEntity<UUID> {
 
     private void touch() {
         this.updatedAt = Instant.now();
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public String getAvatarPrefix() {
+        return avatarPrefix;
+    }
+
+    public String getAvatarFileName() {
+        return avatarFileName;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
     }
 
     // === Validation helpers ===
