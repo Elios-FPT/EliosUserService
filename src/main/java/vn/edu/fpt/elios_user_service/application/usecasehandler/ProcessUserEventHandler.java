@@ -7,13 +7,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.elios_user_service.application.dto.response.UserProfileResponse;
-import vn.edu.fpt.elios_user_service.application.eventpublisher.EventPublisher;
+import vn.edu.fpt.elios_user_service.application.eventpublisher.UserEventPublisher;
 import vn.edu.fpt.elios_user_service.application.usecase.GetUserById;
 import vn.edu.fpt.elios_user_service.application.usecase.ListUsers;
 import vn.edu.fpt.elios_user_service.application.usecase.ProcessUserEvent;
 import vn.edu.fpt.elios_user_service.domain.exception.NotFoundException;
 import vn.edu.fpt.elios_user_service.enums.EventType;
-import vn.edu.fpt.elios_user_service.infra.messaging.event.EventWrapper;
+import vn.edu.fpt.elios_user_service.application.dto.event.EventWrapper;
 
 import java.util.Map;
 import java.util.UUID;
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class ProcessUserEventHandler implements ProcessUserEvent {
     private final GetUserById getUserById;
     private final ListUsers listUsers;
-    private final EventPublisher eventPublisher;
+    private final UserEventPublisher userEventPublisher;
 
     @Override
     public EventWrapper processEvent(EventWrapper requestEvent) {
@@ -35,7 +35,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 null,
                 "Invalid event: missing eventType"
             );
-            eventPublisher.publishResponse("user-response", errorResponse);
+            userEventPublisher.publishResponse("user-response", errorResponse);
             return errorResponse;
         }
 
@@ -45,7 +45,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 case GET_ALL_USER -> handleGetAllUsers(requestEvent);
             };
             
-            eventPublisher.publishResponse("user-response", responseEvent);
+            userEventPublisher.publishResponse("user-response", responseEvent);
             return responseEvent;
         } catch (Exception e) {
             log.error("Error processing event: {}", e.getMessage(), e);
@@ -55,7 +55,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 requestEvent.eventType(),
                 "Internal server error: " + e.getMessage()
             );
-            eventPublisher.publishResponse("user-response", errorResponse);
+            userEventPublisher.publishResponse("user-response", errorResponse);
             return errorResponse;
         }
     }

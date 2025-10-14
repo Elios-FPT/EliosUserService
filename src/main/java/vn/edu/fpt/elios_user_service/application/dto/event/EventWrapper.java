@@ -1,4 +1,4 @@
-package vn.edu.fpt.elios_user_service.infra.messaging.event;
+package vn.edu.fpt.elios_user_service.application.dto.event;
 
 import vn.edu.fpt.elios_user_service.enums.EventType;
 

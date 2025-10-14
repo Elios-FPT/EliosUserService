@@ -1,6 +1,6 @@
 package vn.edu.fpt.elios_user_service.infra.config;
 
-import vn.edu.fpt.elios_user_service.infra.messaging.event.EventWrapper;
+import vn.edu.fpt.elios_user_service.application.dto.event.EventWrapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
