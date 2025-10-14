@@ -9,6 +9,8 @@ import vn.edu.fpt.elios_user_service.application.dto.response.RegisterProfileRes
 import vn.edu.fpt.elios_user_service.application.dto.response.UserProfileResponse;
 import vn.edu.fpt.elios_user_service.application.usecasehandler.GetUserByIdHandler;
 import vn.edu.fpt.elios_user_service.application.usecasehandler.RegisterProfileHandler;
+import vn.edu.fpt.elios_user_service.application.dto.request.UpdateProfileRequest;
+import vn.edu.fpt.elios_user_service.application.usecasehandler.UpdateProfileHandler;
 import vn.edu.fpt.elios_user_service.controller.api.ApiResponse;
 
 import java.util.UUID;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class UserController {
     private final RegisterProfileHandler handler;
     private final GetUserByIdHandler getUserByIdHandler;
+    private final UpdateProfileHandler updateProfileHandler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -29,5 +32,13 @@ public class UserController {
     @GetMapping("/{id}")
     public ApiResponse<UserProfileResponse> getOne(@PathVariable UUID id) {
         return new ApiResponse<>(200, "OK", getUserByIdHandler.getById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse<UserProfileResponse> update(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateProfileRequest req
+    ) {
+        return new ApiResponse<>(200, "User profile updated", updateProfileHandler.update(id, req));
     }
 }

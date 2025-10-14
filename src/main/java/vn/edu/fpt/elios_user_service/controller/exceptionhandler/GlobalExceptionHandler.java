@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<Void> handleUnreadable(HttpMessageNotReadableException ex) {
-        return new ApiResponse<>(400, ex.getMessage(), null);
+        return new ApiResponse<>(400, "Bad request", null);
     }
 
     @ExceptionHandler({DataIntegrityViolationException.class, AlreadyExistsException.class})
