@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(UUID id) {
-        return Optional.empty();
+        return jpaRepository.findById(id).map(userMapper::toDomain);
     }
 
     @Override

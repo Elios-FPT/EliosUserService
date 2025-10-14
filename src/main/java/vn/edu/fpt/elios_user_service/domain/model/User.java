@@ -65,6 +65,31 @@ public final class User extends BaseEntity<UUID> {
         touch();
     }
 
+    public static User rehydrate(
+            UUID id,
+            String firstName,
+            String lastName,
+            Gender gender,
+            LocalDate dateOfBirth,
+            String avatarUrl,
+            String avatarPrefix,
+            String avatarFileName,
+            Instant createdAt,
+            Instant updatedAt
+    ) {
+        User u = new User(id);
+        u.firstName = firstName;
+        u.lastName = lastName;
+        u.gender = gender;
+        u.dateOfBirth = dateOfBirth;
+        u.avatarUrl = avatarUrl;
+        u.avatarPrefix = avatarPrefix;
+        u.avatarFileName = avatarFileName;
+        u.createdAt = createdAt;
+        u.updatedAt = updatedAt;
+        return u;
+    }
+
     private void touch() {
         this.updatedAt = Instant.now();
     }
