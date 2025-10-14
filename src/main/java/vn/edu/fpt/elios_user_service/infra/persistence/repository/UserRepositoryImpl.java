@@ -33,11 +33,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Page<User> findAll(Pageable pageable) {
-        return null;
+        return jpaRepository.findAllByIsActiveTrue(pageable).map(userMapper::toDomain);
     }
 
     @Override
     public Page<User> findByName(String first, String last, Pageable pageable) {
-        return null;
+        return jpaRepository
+                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseAndIsActiveTrue(first, last, pageable)
+                .map(userMapper::toDomain);
     }
 }
