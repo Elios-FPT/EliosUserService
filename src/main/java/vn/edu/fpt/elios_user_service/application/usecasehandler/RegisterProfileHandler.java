@@ -27,7 +27,9 @@ public class RegisterProfileHandler implements RegisterProfile {
                 request.firstName(),
                 request.lastName(),
                 request.gender(),
-                request.dateOfBirth()
+                request.dateOfBirth(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
         );
     }
 }
