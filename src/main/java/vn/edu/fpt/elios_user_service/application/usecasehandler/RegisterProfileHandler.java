@@ -7,6 +7,7 @@ import vn.edu.fpt.elios_user_service.application.dto.response.RegisterProfileRes
 import vn.edu.fpt.elios_user_service.application.mapper.UserDtoMapper;
 import vn.edu.fpt.elios_user_service.application.repository.UserRepository;
 import vn.edu.fpt.elios_user_service.application.usecase.RegisterProfile;
+import vn.edu.fpt.elios_user_service.domain.exception.AlreadyExistsException;
 import vn.edu.fpt.elios_user_service.domain.model.User;
 
 @AllArgsConstructor
@@ -17,6 +18,9 @@ public class RegisterProfileHandler implements RegisterProfile {
 
     @Override
     public RegisterProfileResponse registerProfile(RegisterProfileRequest request) {
+        if (repo.findById(request.id()).isPresent()) {
+            throw new AlreadyExistsException("User already exists");
+        }
         User user = User.create(request.id(),
                 request.firstName(),
                 request.lastName(),
