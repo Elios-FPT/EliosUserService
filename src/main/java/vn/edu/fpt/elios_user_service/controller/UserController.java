@@ -11,6 +11,7 @@ import vn.edu.fpt.elios_user_service.application.usecasehandler.GetUserByIdHandl
 import vn.edu.fpt.elios_user_service.application.usecasehandler.RegisterProfileHandler;
 import vn.edu.fpt.elios_user_service.application.dto.request.UpdateProfileRequest;
 import vn.edu.fpt.elios_user_service.application.usecasehandler.UpdateProfileHandler;
+import vn.edu.fpt.elios_user_service.application.usecasehandler.DeleteProfileHandler;
 import vn.edu.fpt.elios_user_service.controller.api.ApiResponse;
 
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class UserController {
     private final RegisterProfileHandler handler;
     private final GetUserByIdHandler getUserByIdHandler;
     private final UpdateProfileHandler updateProfileHandler;
+    private final DeleteProfileHandler deleteProfileHandler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,5 +42,11 @@ public class UserController {
             @Valid @RequestBody UpdateProfileRequest req
     ) {
         return new ApiResponse<>(200, "User profile updated", updateProfileHandler.update(id, req));
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> delete(@PathVariable UUID id) {
+        deleteProfileHandler.delete(id);
+        return new ApiResponse<>(200, "User profile deleted", null);
     }
 }

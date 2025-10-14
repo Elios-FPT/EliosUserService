@@ -24,12 +24,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(UUID id) {
-        return jpaRepository.findById(id).map(userMapper::toDomain);
+        return jpaRepository.findByIdAndIsActiveTrue(id).map(userMapper::toDomain);
     }
 
-    @Override
-    public void deleteById(UUID id) {
-
+    public void deactivateById(UUID id) {
+        jpaRepository.deactivateById(id);
     }
 
     @Override

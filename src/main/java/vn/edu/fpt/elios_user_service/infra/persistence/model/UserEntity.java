@@ -57,4 +57,7 @@ public class UserEntity {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false, columnDefinition = "timestamptz")
     private Instant updatedAt;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
 }
