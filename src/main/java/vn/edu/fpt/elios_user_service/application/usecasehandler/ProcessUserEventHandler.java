@@ -41,8 +41,8 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
 
         try {
             EventWrapper responseEvent = switch (requestEvent.eventType()) {
-                case GET_USER_BY_ID -> handleGetUserById(requestEvent);
-                case GET_ALL_USER -> handleGetAllUsers(requestEvent);
+                case GET_BY_ID -> handleGetUserById(requestEvent);
+                case GET_ALL -> handleGetAllUsers(requestEvent);
             };
             
             userEventPublisher.publishResponse("user-response", responseEvent);
@@ -68,7 +68,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             return EventWrapper.success(
                 UUID.randomUUID(),
                 requestEvent.eventId(),
-                EventType.GET_USER_BY_ID,
+                EventType.GET_BY_ID,
                 "UserProfileResponse",
                 userProfile
             );
@@ -76,14 +76,14 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             return EventWrapper.error(
                 UUID.randomUUID(),
                 requestEvent.eventId(),
-                EventType.GET_USER_BY_ID,
+                EventType.GET_BY_ID,
                 "Invalid user ID format"
             );
         } catch (NotFoundException e) {
             return EventWrapper.error(
                 UUID.randomUUID(),
                 requestEvent.eventId(),
-                EventType.GET_USER_BY_ID,
+                EventType.GET_BY_ID,
                 e.getMessage()
             );
         }
@@ -97,7 +97,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             return EventWrapper.success(
                 UUID.randomUUID(),
                 requestEvent.eventId(),
-                EventType.GET_ALL_USER,
+                EventType.GET_ALL,
                 "Page<UserProfileResponse>",
                 userList
             );
@@ -105,7 +105,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             return EventWrapper.error(
                 UUID.randomUUID(),
                 requestEvent.eventId(),
-                EventType.GET_ALL_USER,
+                EventType.GET_ALL,
                 "Error retrieving users: " + e.getMessage()
             );
         }
