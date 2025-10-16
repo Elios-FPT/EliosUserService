@@ -43,6 +43,12 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             EventWrapper responseEvent = switch (requestEvent.eventType()) {
                 case GET_BY_ID -> handleGetUserById(requestEvent);
                 case GET_ALL -> handleGetAllUsers(requestEvent);
+                default -> EventWrapper.error(
+                        UUID.randomUUID(),
+                        requestEvent.eventId(),
+                        requestEvent.eventType(),
+                        "Invalid event: unhandled eventType: " + requestEvent.eventType()
+                );
             };
             
             userEventPublisher.publishResponse("user-response", responseEvent);
