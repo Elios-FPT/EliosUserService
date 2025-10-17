@@ -1,16 +1,31 @@
 package vn.edu.fpt.elios_user_service.application.dto.event;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import vn.edu.fpt.elios_user_service.enums.EventType;
 
 import java.util.UUID;
 
 public record EventWrapper(
+
+        @JsonProperty("EventId")
         UUID eventId,
+
+        @JsonProperty("CorrelationId")
         UUID correlationId,
+
+        @JsonProperty("EventType")
         EventType eventType,
+
+        @JsonProperty("ModelType")
         String modelType,
+
+        @JsonProperty("Payload")
         Object payload,
+
+        @JsonProperty("Success")
         Boolean success,
+
+        @JsonProperty("ErrorMessage")
         String errorMessage
 ) {
     public static EventWrapper success(UUID eventId, UUID correlationId, EventType eventType, String modelType, Object payload) {
