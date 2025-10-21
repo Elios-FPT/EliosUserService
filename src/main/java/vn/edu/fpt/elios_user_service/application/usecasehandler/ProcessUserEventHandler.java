@@ -14,6 +14,7 @@ import vn.edu.fpt.elios_user_service.application.usecase.ProcessUserEvent;
 import vn.edu.fpt.elios_user_service.domain.exception.NotFoundException;
 import vn.edu.fpt.elios_user_service.enums.EventType;
 import vn.edu.fpt.elios_user_service.application.dto.event.EventWrapper;
+import vn.edu.fpt.elios_user_service.infra.config.KafkaTopicProperties;
 
 import java.util.Map;
 import java.util.UUID;
@@ -25,9 +26,12 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
     private final GetUserById getUserById;
     private final ListUsers listUsers;
     private final UserEventPublisher userEventPublisher;
+    private final KafkaTopicProperties kafkaTopicProperties;
 
     @Override
-    public EventWrapper processEvent(EventWrapper requestEvent) {
+    public EventWrapper processEvent(EventWrapper requestEvent, String sourceService) {
+        String responseTopic = kafkaTopicProperties.getResponseTopic(sourceService);
+
         if (requestEvent == null || requestEvent.eventType() == null) {
             EventWrapper errorResponse = EventWrapper.error(
                 UUID.randomUUID(),
@@ -35,7 +39,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 null,
                 "Invalid event: missing eventType"
             );
-            userEventPublisher.publishResponse("user-response", errorResponse);
+            userEventPublisher.publishResponse(responseTopic, errorResponse);
             return errorResponse;
         }
 
@@ -51,7 +55,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 );
             };
             
-            userEventPublisher.publishResponse("user-response", responseEvent);
+            userEventPublisher.publishResponse(responseTopic, responseEvent);
             return responseEvent;
         } catch (Exception e) {
             log.error("Error processing event: {}", e.getMessage(), e);
@@ -61,7 +65,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 requestEvent.eventType(),
                 "Internal server error: " + e.getMessage()
             );
-            userEventPublisher.publishResponse("user-response", errorResponse);
+            userEventPublisher.publishResponse(responseTopic, errorResponse);
             return errorResponse;
         }
     }
@@ -75,7 +79,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 UUID.randomUUID(),
                 requestEvent.eventId(),
                 EventType.GET_BY_ID,
-                "UserProfileResponse",
+                "User",
                 userProfile
             );
         } catch (IllegalArgumentException e) {
@@ -104,7 +108,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 UUID.randomUUID(),
                 requestEvent.eventId(),
                 EventType.GET_ALL,
-                "Page<UserProfileResponse>",
+                "User",
                 userList
             );
         } catch (Exception e) {

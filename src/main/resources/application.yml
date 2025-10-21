@@ -41,7 +41,19 @@ spring:
           - traefik.http.services.consul-test.loadbalancer.server.port=8082
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: localhost:9094
+      default-concurrency: 3  # Default threads per source service
+    source-services:
+      - utility
+      - forum
+      - cv-builder
+      - mock-project
+      - code-practice
+    current-service: user
+    model-type: user
+    service-concurrency:
+      forum: 5       # Override for forum service
+      # Others use default-concurrency
 
 management:
   endpoints:
