@@ -36,9 +36,9 @@ spring:
         instance-id: ${spring.application.name}:${server.port}:${random.value}
         tags:
           - traefik.enable=true
-          - traefik.http.routers.consul-test.rule=Host(`www.elios.com`) && PathPrefix(`/api/users`)
-          - traefik.http.routers.consul-test.middlewares=auth@docker
-          - traefik.http.services.consul-test.loadbalancer.server.port=8082
+          - traefik.http.routers.elios-user.rule=Host(`www.elios.com`) && PathPrefix(`/api/users`)
+          - traefik.http.routers.elios-user.middlewares=auth@docker
+          - traefik.http.services.elios-user.loadbalancer.server.port=8082
   kafka:
     consumer:
       bootstrap-servers: localhost:9094

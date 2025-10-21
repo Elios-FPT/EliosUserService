@@ -35,7 +35,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
         if (requestEvent == null || requestEvent.eventType() == null) {
             EventWrapper errorResponse = EventWrapper.error(
                 UUID.randomUUID(),
-                requestEvent != null ? requestEvent.eventId() : null,
+                requestEvent != null ? requestEvent.correlationId() : null,
                 null,
                 "Invalid event: missing eventType"
             );
@@ -49,7 +49,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
                 case GET_ALL -> handleGetAllUsers(requestEvent);
                 default -> EventWrapper.error(
                         UUID.randomUUID(),
-                        requestEvent.eventId(),
+                        requestEvent.correlationId(),
                         requestEvent.eventType(),
                         "Invalid event: unhandled eventType: " + requestEvent.eventType()
                 );
@@ -61,7 +61,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             log.error("Error processing event: {}", e.getMessage(), e);
             EventWrapper errorResponse = EventWrapper.error(
                 UUID.randomUUID(),
-                requestEvent.eventId(),
+                requestEvent.correlationId(),
                 requestEvent.eventType(),
                 "Internal server error: " + e.getMessage()
             );
@@ -77,7 +77,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             
             return EventWrapper.success(
                 UUID.randomUUID(),
-                requestEvent.eventId(),
+                requestEvent.correlationId(),
                 EventType.GET_BY_ID,
                 "User",
                 userProfile
@@ -85,14 +85,14 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
         } catch (IllegalArgumentException e) {
             return EventWrapper.error(
                 UUID.randomUUID(),
-                requestEvent.eventId(),
+                requestEvent.correlationId(),
                 EventType.GET_BY_ID,
                 "Invalid user ID format"
             );
         } catch (NotFoundException e) {
             return EventWrapper.error(
                 UUID.randomUUID(),
-                requestEvent.eventId(),
+                requestEvent.correlationId(),
                 EventType.GET_BY_ID,
                 e.getMessage()
             );
@@ -106,7 +106,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
             
             return EventWrapper.success(
                 UUID.randomUUID(),
-                requestEvent.eventId(),
+                requestEvent.correlationId(),
                 EventType.GET_ALL,
                 "User",
                 userList
@@ -114,7 +114,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
         } catch (Exception e) {
             return EventWrapper.error(
                 UUID.randomUUID(),
-                requestEvent.eventId(),
+                requestEvent.correlationId(),
                 EventType.GET_ALL,
                 "Error retrieving users: " + e.getMessage()
             );
