@@ -37,7 +37,7 @@ spring:
         tags:
           - traefik.enable=true
           - traefik.http.routers.elios-user.rule=Host(`www.elios.com`) && PathPrefix(`/api/users`)
-          - traefik.http.routers.elios-user.middlewares=auth@docker
+          - traefik.http.routers.elios-user.middlewares=cors@file,auth@docker
           - traefik.http.services.elios-user.loadbalancer.server.port=8082
   kafka:
     consumer:
