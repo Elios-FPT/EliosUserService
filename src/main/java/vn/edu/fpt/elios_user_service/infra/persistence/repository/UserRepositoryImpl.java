@@ -8,6 +8,7 @@ import vn.edu.fpt.elios_user_service.application.repository.UserRepository;
 import vn.edu.fpt.elios_user_service.domain.model.User;
 import vn.edu.fpt.elios_user_service.infra.persistence.mapper.UserMapper;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,6 +30,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     public void deactivateById(UUID id) {
         jpaRepository.deactivateById(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return jpaRepository.findAllByIsActiveTrue().stream().map(userMapper::toDomain).toList();
     }
 
     @Override

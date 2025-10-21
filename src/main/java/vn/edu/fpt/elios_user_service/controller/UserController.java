@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.elios_user_service.application.dto.request.RegisterProfileRequest;
 import vn.edu.fpt.elios_user_service.application.dto.response.RegisterProfileResponse;
 import vn.edu.fpt.elios_user_service.application.dto.response.UserProfileResponse;
-import vn.edu.fpt.elios_user_service.application.usecasehandler.ListUsersHandler;
-import vn.edu.fpt.elios_user_service.application.usecasehandler.GetUserByIdHandler;
-import vn.edu.fpt.elios_user_service.application.usecasehandler.RegisterProfileHandler;
+import vn.edu.fpt.elios_user_service.application.usecasehandler.*;
+import vn.edu.fpt.elios_user_service.application.usecasehandler.ListUsersPageHandler;
 import vn.edu.fpt.elios_user_service.application.dto.request.UpdateProfileRequest;
-import vn.edu.fpt.elios_user_service.application.usecasehandler.UpdateProfileHandler;
-import vn.edu.fpt.elios_user_service.application.usecasehandler.DeleteProfileHandler;
 import vn.edu.fpt.elios_user_service.controller.api.ApiResponse;
 
 import java.util.UUID;
@@ -27,7 +24,7 @@ public class UserController {
     private final GetUserByIdHandler getUserByIdHandler;
     private final UpdateProfileHandler updateProfileHandler;
     private final DeleteProfileHandler deleteProfileHandler;
-    private final ListUsersHandler listUsersHandler;
+    private final ListUsersPageHandler listUsersPageHandler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -45,7 +42,7 @@ public class UserController {
             Pageable pageable,
             @RequestParam(required = false, name = "q") String q
     ) {
-        return new ApiResponse<>(200, "OK", listUsersHandler.list(pageable, q));
+        return new ApiResponse<>(200, "OK", listUsersPageHandler.list(pageable, q));
     }
 
     @PutMapping("/{id}")
