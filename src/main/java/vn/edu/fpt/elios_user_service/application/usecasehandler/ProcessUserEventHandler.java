@@ -16,6 +16,7 @@ import vn.edu.fpt.elios_user_service.enums.EventType;
 import vn.edu.fpt.elios_user_service.application.dto.event.EventWrapper;
 import vn.edu.fpt.elios_user_service.infra.config.KafkaTopicProperties;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -102,7 +103,7 @@ public class ProcessUserEventHandler implements ProcessUserEvent {
     private EventWrapper handleGetAllUsers(EventWrapper requestEvent) {
         try {
             Pageable pageable = parsePageableFromPayload(requestEvent.payload());
-            Page<UserProfileResponse> userList = listUsers.list(pageable, null);
+            List<UserProfileResponse> userList = listUsers.list();
             
             return EventWrapper.success(
                 UUID.randomUUID(),
