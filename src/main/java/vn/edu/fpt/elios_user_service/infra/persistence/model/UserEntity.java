@@ -12,7 +12,6 @@ import org.hibernate.type.SqlTypes;
 import vn.edu.fpt.elios_user_service.enums.Gender;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -34,7 +33,7 @@ public class UserEntity {
     private String lastName;
 
     @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
+    private Instant dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)

@@ -3,14 +3,13 @@ package vn.edu.fpt.elios_user_service.domain.model;
 import vn.edu.fpt.elios_user_service.enums.Gender;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
 public final class User extends BaseEntity<UUID> {
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    private Instant dateOfBirth;
     private Gender gender;
     private String avatarUrl;
     private String avatarPrefix;
@@ -24,7 +23,7 @@ public final class User extends BaseEntity<UUID> {
         super(id);
     }
 
-    public static User create(UUID id, String firstName, String lastName, Gender gender, LocalDate dateOfBirth) {
+    public static User create(UUID id, String firstName, String lastName, Gender gender, Instant dateOfBirth) {
         User u = new User(id);
         u.firstName = validateString("firstName", firstName, 20, true);
         u.lastName  = validateString("lastName",  lastName,  20, true);
@@ -41,7 +40,7 @@ public final class User extends BaseEntity<UUID> {
         touch();
     }
 
-    public void updateDateOfBirth(LocalDate dateOfBirth) {
+    public void updateDateOfBirth(Instant dateOfBirth) {
         this.dateOfBirth = validateDob(dateOfBirth);
         touch();
     }
@@ -70,7 +69,7 @@ public final class User extends BaseEntity<UUID> {
             String firstName,
             String lastName,
             Gender gender,
-            LocalDate dateOfBirth,
+            Instant dateOfBirth,
             String avatarUrl,
             String avatarPrefix,
             String avatarFileName,
@@ -102,7 +101,7 @@ public final class User extends BaseEntity<UUID> {
         return lastName;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Instant getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -152,9 +151,9 @@ public final class User extends BaseEntity<UUID> {
         return v;
     }
 
-    private static LocalDate validateDob(LocalDate dob) {
+    private static Instant validateDob(Instant dob) {
         if (dob == null) return null;
-        if (dob.isAfter(LocalDate.now())) {
+        if (dob.isAfter(Instant.now())) {
             throw new IllegalArgumentException("dateOfBirth must not be in the future");
         }
         return dob;
