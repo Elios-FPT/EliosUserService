@@ -15,12 +15,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final ProxyAuthFilter proxyAuthFilter;
-    private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(ProxyAuthFilter proxyAuthFilter,
-                          CustomAccessDeniedHandler accessDeniedHandler) {
+    public SecurityConfig(ProxyAuthFilter proxyAuthFilter) {
         this.proxyAuthFilter = proxyAuthFilter;
-        this.accessDeniedHandler = accessDeniedHandler;
     }
 
     @Bean
@@ -33,8 +30,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasAuthority(RoleConstants.ADMIN)
                         .requestMatchers("/users/**").hasAnyAuthority(RoleConstants.ADMIN, RoleConstants.USER)
                         .anyRequest().authenticated()
-                )
-                .exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler));
+                );
 
         return http.build();
     }
