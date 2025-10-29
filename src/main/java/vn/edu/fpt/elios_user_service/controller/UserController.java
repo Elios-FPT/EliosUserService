@@ -2,9 +2,13 @@ package vn.edu.fpt.elios_user_service.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.elios_user_service.application.dto.request.RegisterProfileRequest;
 import vn.edu.fpt.elios_user_service.application.dto.response.RegisterProfileResponse;
@@ -16,6 +20,7 @@ import vn.edu.fpt.elios_user_service.controller.api.ApiResponse;
 
 import java.util.UUID;
 
+@Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/users")
@@ -38,10 +43,14 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('Admin')")
     public ApiResponse<Page<UserProfileResponse>> list(
             Pageable pageable,
             @RequestParam(required = false, name = "q") String q
     ) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Principal = {}", auth.getName());
+        log.info("Authorities = {}", auth.getAuthorities());
         return new ApiResponse<>(200, "OK", listUsersPageHandler.list(pageable, q));
     }
 
