@@ -1,6 +1,7 @@
 server:
   port: 8082
   shutdown: graceful
+  max-http-request-header-size: 32768
 
 spring:
   application:
