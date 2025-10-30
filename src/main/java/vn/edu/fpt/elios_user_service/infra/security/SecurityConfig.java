@@ -29,6 +29,7 @@ public class SecurityConfig {
                         // Example fine-grained rules
                         .requestMatchers("/admin/**").hasAuthority(RoleConstants.ADMIN)
                         .requestMatchers("/users/**").hasAnyAuthority(RoleConstants.ADMIN, RoleConstants.USER)
+                        .requestMatchers("/swagger/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

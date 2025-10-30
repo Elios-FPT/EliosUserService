@@ -70,3 +70,11 @@ logging:
     root: INFO
     org.hibernate.SQL: INFO
     org.hibernate.orm.jdbc.bind: INFO
+
+springdoc:
+  api-docs:
+    path: /swagger/v1/swagger.json
+  swagger-ui:
+    path: /swagger/index.html
+    enabled: true
+  show-actuator: false
