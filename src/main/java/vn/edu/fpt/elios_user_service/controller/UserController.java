@@ -42,6 +42,12 @@ public class UserController {
         return new ApiResponse<>(200, "OK", getUserByIdHandler.getById(id));
     }
 
+    @GetMapping("/me/profile")
+    public ApiResponse<UserProfileResponse> getProfile(
+            @RequestHeader(value = "X-Auth-Request-User") UUID authenticatedUserId) {
+        return new ApiResponse<>(200, "OK", getUserByIdHandler.getById(authenticatedUserId));
+    }
+
     @GetMapping
     @PreAuthorize("hasAuthority('Admin')")
     public ApiResponse<Page<UserProfileResponse>> list(
