@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.elios_user_service.application.dto.request.RegisterProfileRequest;
@@ -45,7 +46,41 @@ public class UserController {
     @GetMapping("/me/profile")
     public ApiResponse<UserProfileResponse> getProfile(
             @RequestHeader(value = "X-Auth-Request-User") UUID authenticatedUserId) {
-        return new ApiResponse<>(200, "OK", getUserByIdHandler.getById(authenticatedUserId));
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Principal = {}", auth.getName());
+        log.info("Authorities = {}", auth.getAuthorities());
+
+        UserProfileResponse tmp = getUserByIdHandler.getById(authenticatedUserId);
+
+        String userRole = "User";
+        for (GrantedAuthority authority : auth.getAuthorities()) {
+            if (authority.getAuthority().equals("Admin")) {
+                userRole = "Admin";
+                break;
+            } else if (authority.getAuthority().equals("Resource Manager")) {
+                userRole = "Resource Manager";
+                break;
+            } else if (authority.getAuthority().equals("Content Moderator")) {
+                userRole = "Content Moderator";
+                break;
+            }
+        }
+
+
+        UserProfileResponse userProfile = new UserProfileResponse(tmp.id(),
+                userRole,
+                tmp.firstName(),
+                tmp.lastName(),
+                tmp.dateOfBirth(),
+                tmp.gender(),
+                tmp.avatarUrl(),
+                tmp.avatarPrefix(),
+                tmp.avatarFileName(),
+                tmp.createdAt(),
+                tmp.updatedAt());
+
+        return new ApiResponse<>(200, "OK", userProfile);
     }
 
     @GetMapping

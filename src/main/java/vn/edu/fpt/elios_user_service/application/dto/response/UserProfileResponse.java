@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public record UserProfileResponse(
         UUID id,
+        String role,
         String firstName,
         String lastName,
         Instant dateOfBirth,
